@@ -16,3 +16,14 @@ TacoCloudApplicationTests.java：这是一个简单的测试类，它能确保Sp
 •@SpringBootConfiguration：将该类声明为配置类。尽管这个类目前还没有太多的配置，但是后续我们可以按需添加基于Java的Spring框架配置。这个注解实际上是@Configuration注解的特殊形式。
 •@EnableAutoConfiguration：启用Spring Boot的自动配置。我们随后会介绍自动配置的更多功能。就现在来说，我们只需要知道这个注解会告诉Spring Boot自动配置它认为我们会用到的组件。
 •@ComponentScan：启用组件扫描。这样我们能够通过像@Component、@Controller、@Service这样的注解声明其他类，Spring会自动发现它们并将它们注册为Spring应用上下文中的组件。
+
+
+JSP并不需要在构建文件中添加任何特殊的依赖。这是因为Servlet容器本身（默认是Tomcat）会实现JSP，因此不需要额外的依赖。但是，如果你选择使用JSP，会有另外一个问题。事实上，Java Servlet容器包括嵌入式的Tomcat和Jetty容器，通常会在“/WEB-INF”目录下寻找JSP。如果我们将应用构建成一个可执行的JAR文件，就无法满足这种需求了
+因此，只有在将应用构建为WAR文件并部署到传统的Servlet容器中时，才能选择JSP方案。如果你想要构建可执行的JAR文件，那么必须选择Thymeleaf、FreeMarker或表2.2中的其他方案。
+
+•Spring提供了一个强大的Web框架，名为Spring MVC，能够用来为Spring应用开发Web前端。
+•Spring MVC是基于注解的，通过像@RequestMapping、@GetMapping和@PostMapping这样的注解来启用请求处理方法的声明。
+•大多数的请求处理方法最终会返回一个视图的逻辑名称，比如Thymeleaf模板，请求会转发到这样的视图上（同时会带有任意的模型数据）。
+•Spring MVC支持校验，这是通过Java Bean Validation API和Validation API的实现（如Hibernate Validator）完成的。
+•对于没有模型数据和逻辑处理的HTTP GET请求，可以使用视图控制器。
+•除了Thymeleaf之外，Spring支持各种视图方案，包括FreeMarker、Groovy Templates和Mustache。
