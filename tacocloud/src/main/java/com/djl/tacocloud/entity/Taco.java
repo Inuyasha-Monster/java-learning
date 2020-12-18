@@ -5,6 +5,7 @@ import org.springframework.lang.NonNullFields;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -13,6 +14,10 @@ import java.util.List;
  */
 @Data
 public class Taco {
+
+    private long id;
+    private Date createdAt;
+
     @NotNull
     @Size(min = 5, message = "最小5个字符")
     private String name;

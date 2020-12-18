@@ -3,7 +3,9 @@ package com.djl.tacocloud.controller;
 import com.djl.tacocloud.entity.Ingredient;
 import com.djl.tacocloud.entity.Ingredient.Type;
 import com.djl.tacocloud.entity.Taco;
+import com.djl.tacocloud.repository.IngredientRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -25,7 +28,28 @@ import java.util.stream.Collectors;
 @Controller
 @RequestMapping("/design")
 public class DesignTacoController {
+
+    private IngredientRepository ingredientRepository;
+
+    @Autowired
+    public DesignTacoController(IngredientRepository ingredientRepository) {
+        this.ingredientRepository = ingredientRepository;
+    }
+
     @GetMapping
+    public String showDesignForm2(Model model) {
+        List<Ingredient> ingredients = new ArrayList<>();
+        // 读取数据库数据加载
+        ingredientRepository.findAll().forEach(x -> ingredients.add(x));
+        final Type[] types = Type.values();
+        for (Type type : types) {
+            model.addAttribute(type.toString().toLowerCase(), filterByType(ingredients, type));
+        }
+        model.addAttribute("design", new Taco());
+        return "design";
+    }
+
+    //    @GetMapping
     public String showDesignForm(Model model) {
         List<Ingredient> ingredients = Arrays.asList(
                 new Ingredient("FLTO", "Flour Tortilla", Type.WRAP),
