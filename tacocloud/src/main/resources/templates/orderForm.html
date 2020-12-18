@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Orders</title>
+</head>
+<body>
+<h1>Orders</h1>
+
+<form method="post" th:action="@{/orders}" th:object="${order}">
+    <h1>Order your taco creations!</h1>
+    <img th:src="@{/images/TacoCloud.png}" style="width: 300px;height: 300px"/>
+
+    <a th:href="@{/design}" id="another">Design another taco</a><br/>
+
+    <div th:if="${#fields.hasErrors()}">
+        <span class="validationError">
+            Please correct the problems below and resubmit.
+        </span>
+    </div>
+
+    <div>请填写必要信息</div>
+    <label for="name">Name:</label>
+    <input id="name" type="text" th:field="*{name}"/>
+    <br/>
+    <label for="street">地址街道:</label>
+    <input id="street" type="text" th:field="*{street}"/>
+    <br/>
+    <label for="city">city:</label>
+    <input id="city" type="text" th:field="*{city}"/>
+    <br/>
+    <label for="state">state:</label>
+    <input id="state" type="text" th:field="*{state}"/>
+    <br/>
+    <label for="zip">zip code:</label>
+    <input id="zip" type="text" th:field="*{zip}"/>
+    <br/>
+    <label for="ccNumber">ccNumber:</label>
+    <input id="ccNumber" type="text" th:field="*{ccNumber}"/>
+    <!--    使用th:if属性来决定是否要显示该元素。fields属性的hasErrors()方法会检查ccNumber域是否存在错误，如果存在，就将会渲染<span>。-->
+    <span style="color: red" th:if="${#fields.hasErrors('ccNumber')}">CC Num Error</span>
+    <br/>
+    <label for="ccExpiration">ccExpiration:</label>
+    <input id="ccExpiration" type="text" th:field="*{ccExpiration}"/>
+    <br/>
+    <label for="ccCVV">state:</label>
+    <input id="ccCVV" type="text" th:field="*{ccCVV}"/>
+    <br/>
+    <input type="submit" value="提交订单">
+</form>
+</body>
+</html>
