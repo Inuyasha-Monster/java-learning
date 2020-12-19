@@ -49,7 +49,7 @@ public class JdbcTacoRepository implements TacoRepository {
     }
 
     private void saveIngredientToTaco(Ingredient ingredient, long tacoId) {
-        jdbc.update("insert into Taco_Ingredient(taco,ingredient)" +
+        jdbc.update("insert into TACO_INGREDIENTS(taco,ingredient)" +
                         "values (?,?)",
                 tacoId, ingredient.getId());
     }

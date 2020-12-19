@@ -1,0 +1,2 @@
+问题记录:
+1. spring session attribute 多个 controller 共享对象失败,需要寻找原因

@@ -79,6 +79,10 @@ public class DesignTacoController {
         return ingredients.stream().filter(x -> x.getType().equals(type)).collect(Collectors.toList());
     }
 
+    /**
+     * 如果从session找不到实例则调用此方法创建对象
+     * @return
+     */
     @ModelAttribute(name = "order")
     public Order order() {
         return new Order();
@@ -90,9 +94,10 @@ public class DesignTacoController {
     }
 
     @PostMapping
-    public String processDesign2(@Valid Taco design, Errors errors, @ModelAttribute Order order) { // Order参数带有@ModelAttribute注解，表明它的值应该是来自模型的，SpringMVC不会尝试将请求参数绑定到它上面。
+    public String processDesign2(@Valid Taco design, Errors errors, @ModelAttribute Order order, Model model) { // Order参数带有@ModelAttribute注解，表明它的值应该是来自模型的，SpringMVC不会尝试将请求参数绑定到它上面。
         if (errors.hasErrors()) {
             // 如果存在校验错误，那么这个方法将不会处理Taco对象并返回“design”视图名，表单会重新展现。
+            model.addAttribute("design", design);
             return "design";
         }
         // @Valid注解会告诉Spring MVC要对提交的Taco对象进行校验，而校验时机是在它绑定完表单数据之后、调用processDesign()之前

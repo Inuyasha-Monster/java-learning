@@ -5,6 +5,7 @@ import org.hibernate.validator.constraints.CreditCardNumber;
 
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.util.ArrayList;
 import java.util.Date;
@@ -36,13 +37,16 @@ public class Order {
     @NotBlank
     private String zip;
 
-    @CreditCardNumber
+//    @CreditCardNumber
+    @NotNull
     private String ccNumber;
 
-    @Pattern(regexp = "^(0[1-9]|1[0-2])([\\/])([1-9][0-9])$")
+//    @Pattern(regexp = "^(0[1-9]|1[0-2])([\\/])([1-9][0-9])$")
+    @NotNull
     private String ccExpiration;
 
-    @Digits(integer = 3, fraction = 0)
+//    @Digits(integer = 3, fraction = 0)
+    @NotNull
     private String ccCVV;
 
     private List<Taco> tacos = new ArrayList<>();
