@@ -6,6 +6,7 @@ import com.djl.tacocloud.repository.OrderRepository;
 import com.djl.tacocloud.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
 
 import javax.validation.Valid;
+import java.awt.print.Pageable;
 import java.security.Principal;
 
 /**
@@ -35,6 +37,13 @@ public class OrderController {
     public OrderController(OrderRepository orderRepository, UserRepository userRepository) {
         this.orderRepository = orderRepository;
         this.userRepository = userRepository;
+    }
+
+    @GetMapping
+    public String ordersForUser(@AuthenticationPrincipal User user, Model model) {
+        Pageable pageable = (Pageable) PageRequest.of(0, 20);
+        model.addAttribute("orders", orderRepository.findByUserOrderByPlacedAtDesc(user));
+        return "orderList";
     }
 
     /**

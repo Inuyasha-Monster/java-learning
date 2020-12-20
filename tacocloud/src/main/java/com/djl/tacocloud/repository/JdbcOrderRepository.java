@@ -2,6 +2,7 @@ package com.djl.tacocloud.repository;
 
 import com.djl.tacocloud.entity.Order;
 import com.djl.tacocloud.entity.Taco;
+import com.djl.tacocloud.entity.User;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -23,6 +24,7 @@ public class JdbcOrderRepository implements OrderRepository {
 
     private final SimpleJdbcInsert orderInsert;
     private final SimpleJdbcInsert orderTacoInsert;
+    private final JdbcTemplate jdbcTemplate;
     private final ObjectMapper objectMapper;
 
     @Autowired
@@ -31,6 +33,7 @@ public class JdbcOrderRepository implements OrderRepository {
         this.orderInsert = new SimpleJdbcInsert(jdbcTemplate).withTableName("Taco_Order").usingGeneratedKeyColumns("id");
         // 第二个实例赋值给了orderTacoInserter实例变量，配置为与Taco_Order_Tacos表协作，但是没有声明该表中ID是如何生成的。
         this.orderTacoInsert = new SimpleJdbcInsert(jdbcTemplate).withTableName("Taco_Order_Tacos");
+        this.jdbcTemplate = jdbcTemplate;
         this.objectMapper = new ObjectMapper();
     }
 
@@ -60,4 +63,11 @@ public class JdbcOrderRepository implements OrderRepository {
         }
         return order;
     }
+
+    @Override
+    public List<Order> findByUserOrderByPlacedAtDesc(User user) {
+        List<Order> orders = jdbcTemplate.queryForList("select * from Taco_Order a where a.USER_ID=? order by a.PLACED_AT desc", Order.class, user.getId());
+        return orders;
+    }
+
 }
