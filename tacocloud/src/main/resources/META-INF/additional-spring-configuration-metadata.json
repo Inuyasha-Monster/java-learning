@@ -1,0 +1,19 @@
+{
+  "properties": [
+    {
+      "name": "spring-application-name",
+      "type": "java.lang.String",
+      "description": "Description for spring-application-name."
+    },
+    {
+      "name": "djl.test",
+      "type": "java.lang.String",
+      "description": "自定义测试配置"
+    },
+    {
+      "name": "taco.orders.pageSize",
+      "type": "java.lang.String",
+      "description": "订单页面的分页参数"
+    }
+  ]
+}

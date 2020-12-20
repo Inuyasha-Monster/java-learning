@@ -11,3 +11,11 @@ Spring Security提供了内置的CSRF保护。更幸运的是，默认它就是�
 尽管我们将server.port属性显式设置成了0，但是服务器并不会真的在端口0上启动。相反，它会任选一个可用的端口。在我们运行自动化集成测试的时候，这会非常有用，因为这样能够保证并发运行的测试不会与硬编码的端口号冲突,如果不关心应用在哪个端口启动，那么这种配置方式也非常有用，因为此时应用将会变成通过服务注册中心来进行查找的微服务
 
 默认情况下，Spring Boot通过Logback配置日志，日志会以INFO级别写入到控制台中
+
+当为Spring Data repository创建端点的时候，Spring Data REST会尝试使用相关实体类的复数形式。对于Ingredient实体来说，端点将会是“/ingredients”，对于Order和User实体，端点将会是“/orders”和“/users”
+
+•REST端点可以通过Spring MVC来创建，这里的控制器与面向浏览器的控制器遵循相同的编程模型。
+•为了绕过视图和模型的逻辑并将数据直接写入响应体中，控制器处理方法既可以添加@ResponseBody注解也可以返回ResponseEntity对象。
+•@RestController注解简化了REST控制器，使用它的话，处理器方法中就不需要添加@ResponseBody注解了。
+•Spring HATEOAS为Spring MVC控制器返回的资源启用了超链接功能。
+•借助Spring Data REST，Spring Data repository可以自动导出为REST API。

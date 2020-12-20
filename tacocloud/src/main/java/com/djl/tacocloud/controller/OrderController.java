@@ -1,11 +1,13 @@
 package com.djl.tacocloud.controller;
 
+import com.djl.tacocloud.config.OrderPros;
 import com.djl.tacocloud.entity.Order;
 import com.djl.tacocloud.entity.User;
 import com.djl.tacocloud.repository.OrderRepository;
 import com.djl.tacocloud.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -28,21 +30,34 @@ import java.security.Principal;
 @Controller
 @RequestMapping("/orders")
 @SessionAttributes("order")
+//@ConfigurationProperties(prefix = "taco.orders")
 public class OrderController {
+
+//    private int pageSize = 20;
+//
+//    public int getPageSize() {
+//        return pageSize;
+//    }
+//
+//    public void setPageSize(int pageSize) {
+//        this.pageSize = pageSize;
+//    }
 
     private final OrderRepository orderRepository;
     private final UserRepository userRepository;
+    private final OrderPros orderPros;
 
     @Autowired
-    public OrderController(OrderRepository orderRepository, UserRepository userRepository) {
+    public OrderController(OrderRepository orderRepository, UserRepository userRepository, OrderPros orderPros) {
         this.orderRepository = orderRepository;
         this.userRepository = userRepository;
+        this.orderPros = orderPros;
     }
 
     @GetMapping
     public String ordersForUser(@AuthenticationPrincipal User user, Model model) {
-        Pageable pageable = (Pageable) PageRequest.of(0, 20);
-        model.addAttribute("orders", orderRepository.findByUserOrderByPlacedAtDesc(user));
+        Pageable pageable = (Pageable) PageRequest.of(0, orderPros.getPageSize());
+        model.addAttribute("orders", orderRepository.findByUserOrderByPlacedAtDesc(user, pageable));
         return "orderList";
     }
 

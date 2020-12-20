@@ -2,8 +2,8 @@ package com.djl.tacocloud.repository;
 
 import com.djl.tacocloud.entity.Order;
 import com.djl.tacocloud.entity.User;
-import org.springframework.data.repository.CrudRepository;
 
+import java.awt.print.Pageable;
 import java.util.List;
 
 /**
@@ -14,5 +14,5 @@ public interface OrderRepository {
 
     Order save(Order order);
 
-    List<Order> findByUserOrderByPlacedAtDesc(User user);
+    List<Order> findByUserOrderByPlacedAtDesc(User user, Pageable pageable);
 }

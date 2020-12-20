@@ -9,7 +9,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
-import javax.sql.DataSource;
+import java.awt.print.Pageable;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -65,7 +65,7 @@ public class JdbcOrderRepository implements OrderRepository {
     }
 
     @Override
-    public List<Order> findByUserOrderByPlacedAtDesc(User user) {
+    public List<Order> findByUserOrderByPlacedAtDesc(User user, Pageable pageable) {
         List<Order> orders = jdbcTemplate.queryForList("select * from Taco_Order a where a.USER_ID=? order by a.PLACED_AT desc", Order.class, user.getId());
         return orders;
     }

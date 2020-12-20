@@ -1,6 +1,7 @@
 package com.djl.tacocloud.entity;
 
 import lombok.Data;
+import org.springframework.data.rest.core.annotation.RestResource;
 import org.springframework.lang.NonNullFields;
 import org.springframework.web.bind.annotation.Mapping;
 
@@ -18,6 +19,7 @@ import java.util.stream.Collectors;
  */
 @Data
 @Entity
+@RestResource(rel = "tacos", path = "tacos") // @RestResource注解能够为实体提供任何我们想要的关系名和路径。在本例中，我们将它们都设置成了“tacos”
 public class Taco {
 
     @Id

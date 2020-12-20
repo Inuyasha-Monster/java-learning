@@ -3,6 +3,8 @@ package com.djl.tacocloud.repository;
 import com.djl.tacocloud.entity.Ingredient;
 import com.djl.tacocloud.entity.Taco;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.util.Optionals;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.PreparedStatementCreatorFactory;
@@ -13,6 +15,8 @@ import java.sql.Timestamp;
 import java.sql.Types;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
+import java.util.Optional;
 
 /**
  * @author djl
@@ -36,6 +40,19 @@ public class JdbcTacoRepository implements TacoRepository {
             saveIngredientToTaco(ingredient, tacoId);
         }
         return null;
+    }
+
+    @Override
+    public List<Taco> findAll(PageRequest pageRequest) {
+        List<Taco> tacos = jdbc.queryForList("select * from Taco", Taco.class);
+        return tacos;
+    }
+
+    @Override
+    public Optional<Taco> findById(long id) {
+        Taco taco = jdbc.queryForObject("select * from Taco where id=?", Taco.class, id);
+        Optional<Taco> result = Optional.ofNullable(taco);
+        return result;
     }
 
     private long saveTacoInfo(Taco taco) {
