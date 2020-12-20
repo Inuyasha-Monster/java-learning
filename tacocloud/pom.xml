@@ -26,6 +26,11 @@
     <!--项目依赖-->
     <dependencies>
 
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-artemis</artifactId>
+        </dependency>
+
         <!--        Spring Data REST是Spring Data家族中的另外一个成员，它会为Spring Data创建的repository自动生成REST API-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
