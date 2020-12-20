@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>注册</title>
+</head>
+<body>
+<h1>注册</h1>
+<form method="post" th:action="@{/register}" id="registerForm">
+    <label>姓名:</label>
+    <input type="text" name="username"/><br/>
+
+    <label>密码:</label>
+    <input type="password" name="password"/><br/>
+
+    <label>密码确认:</label>
+    <input type="password" name="confirm"/><br/>
+
+    <label>全名:</label>
+    <input type="text" name="fullname"/><br/>
+
+    <label>街道:</label>
+    <input type="text" name="street"/><br/>
+
+    <label>城市:</label>
+    <input type="text" name="city"/><br/>
+
+    <label>状态:</label>
+    <input type="text" name="state"/><br/>
+
+    <label>邮政编码:</label>
+    <input type="text" name="zip"/><br/>
+
+    <label>手机号码:</label>
+    <input type="text" name="phone"/><br/>
+
+    <input type="submit" th:value="注册"/>
+</form>
+</body>
+</html>

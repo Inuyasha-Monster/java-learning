@@ -1,2 +1,9 @@
 问题记录:
 1. spring session attribute 多个 controller 共享对象失败,需要寻找原因
+2. registry.addViewController("/login").setViewName("login"); 妈的这里配置为何不起作用
+
+除了Equals和Between操作之外，Spring Data方法签名还能包括如下的操作符：•IsAfter、After、IsGreaterThan、GreaterThan•IsGreaterThanEqual、GreaterThanEqual•IsBefore、Before、IsLessThan、LessThan•IsLessThanEqual、LessThanEqual•IsBetween、Between•IsNull、Null•IsNotNull、NotNull•IsIn、In•IsNotIn、NotIn•IsStartingWith、StartingWith、StartsWith•IsEndingWith、EndingWith、EndsWith•IsContaining、Containing、Contains•IsLike、Like•IsNotLike、NotLike•IsTrue、True•IsFalse、False•Is、Equals•IsNot、Not•IgnoringCase、IgnoresCase
+
+Spring Security为配置用户存储提供了多个可选方案，包括：•基于内存的用户存储；•基于JDBC的用户存储；•以LDAP作为后端的用户存储；•自定义用户详情服务。
+
+Spring Security提供了内置的CSRF保护。更幸运的是，默认它就是启用的，我们不需要显式配置它。我们唯一需要做的就是确保应用中的每个表单都要有一个名为“_csrf”的字段，它会持有CSRF token。

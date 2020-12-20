@@ -3,10 +3,12 @@ package com.djl.tacocloud.entity;
 import lombok.Data;
 import org.hibernate.validator.constraints.CreditCardNumber;
 
+import javax.persistence.*;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -17,8 +19,20 @@ import java.util.List;
  * Taco_Order
  */
 @Data
-public class Order {
+@Entity
+@Table(name = "Taco_Order")
+public class Order implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+
+    /**
+     * 多个订单对应一个用户
+     */
+    @ManyToOne
+    private User user;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     private Date placedAt;
 
@@ -37,21 +51,27 @@ public class Order {
     @NotBlank
     private String zip;
 
-//    @CreditCardNumber
+    //    @CreditCardNumber
     @NotNull
     private String ccNumber;
 
-//    @Pattern(regexp = "^(0[1-9]|1[0-2])([\\/])([1-9][0-9])$")
+    //    @Pattern(regexp = "^(0[1-9]|1[0-2])([\\/])([1-9][0-9])$")
     @NotNull
     private String ccExpiration;
 
-//    @Digits(integer = 3, fraction = 0)
+    //    @Digits(integer = 3, fraction = 0)
     @NotNull
     private String ccCVV;
 
+    @ManyToMany(targetEntity = Taco.class)
     private List<Taco> tacos = new ArrayList<>();
 
     public void addDesign(Taco taco) {
-        tacos.add(taco);
+        this.tacos.add(taco);
+    }
+
+    @PrePersist
+    void createdAt() {
+        this.placedAt = new Date();
     }
 }
