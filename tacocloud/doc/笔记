@@ -26,4 +26,61 @@ Spring Security提供了内置的CSRF保护。更幸运的是，默认它就是�
 •Spring支持使用JMS、RabbitMQ或Apache Kafka实现异步消息。
 •应用程序可以使用基于模板的客户端（JmsTemplate、RabbitTemplate或KafkaTemplate）向消息代理发送消息。
 •接收消息的应用程序可以借助相同的基于模板的客户端以拉取模式消费消息。
-•通过使用消息监听器注解（@JmsListener、@RabbitListener或@KafkaListener），消息也可以推送至消费者的bean方法中。
+•通过使用消息监听器注解（@JmsListener、@RabbitListener或@KafkaListener），消息也可以推送至消费者的bean方法中。\
+
+
+
+•通道（channel）：将消息从一个元素传递到另一个元素。
+
+•过滤器（filter）：基于某些断言，条件化地允许某些消息通过流。
+
+•转换器（transformer）：改变消息的值和/或将消息载荷从一种类型转换成另一种类型。
+
+•路由器（router）：将消息路由至一个或多个通道，通常会基于消息的头信息进行路由。
+
+•切分器（splitter）：将传入的消息切割成两个或更多的消息，然后将每个消息发送至不同的通道；
+
+•聚合器（aggregator）：切分器的反向操作，将来自不同通道的多个消息合并成一个消息。
+
+•服务激活器（service activator）：将消息传递给某个Java方法来进行处理，并将返回值发布到输出通道上。
+
+•通道适配器（channel adapter）：将通道连接到某些外部系统或传输方式，可以接受输入，也可以写出到外部系统。
+
+•网关（gateway）：通过接口将数据传递到集成流中。
+
+---
+
+Spring Integration提供了多种通道实现。
+
+•PublishSubscribeChannel：发送到PublishSubscribeChannel的消息会被传递到一个或多个消费者中。如果有多个消费者，它们都会接收到消息。
+
+•QueueChannel：发送到QueueChannel的消息会存储到一个队列中，会按照先进先出（FirstIn First Out，FIFO）的方式被拉取出来。如果有多个消费者，只有其中的一个消费者会接收到消息。
+
+•PriorityChannel：与QueueChannel类似，但它不是FIFO的方式，而是会基于消息的priority头信息被消费者拉取出来。
+
+•RendezvousChannel：与QueueChannel类似，但是发送者会一直阻塞通道，直到消费者接收到消息为止，实际上会同步发送者和消费者。
+
+•DirectChannel：与PublishSubscribeChannel类似，但是消息只会发送至一个消费者，它会在与发送者相同的线程中调用消费者。这种方式允许事务跨通道。
+
+•ExecutorChannel：类似于DirectChannel，但是消息分发是通过TaskExecutor实现的，这样会在与发送者独立的线程中执行。这种通道类型不支持事务跨通道。
+
+•FluxMessageChannel：反应式流的发布者消息通道，基于Reactor项目的Flux。（我们将会在第10章讨论反应式流、Reactor和Flux。）
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
