@@ -84,6 +84,7 @@ Spring 5 利用 Reactor 创建响应式控制器、存储库、REST 客户端和
 
 Spring 5引入了一个非阻塞、异步的Web框架，该框架在很大程度上是基于Reactor项目的，能够解决Web应用和API中对更好的可扩展性的需求。接下来我们看一下Spring WebFlux：面向Spring的反应式Web框架。
 
+与Mono.block()类似，Flux.toIterable()在将Flux发布的对象抽取到Iterable的过程中是阻塞的
 
 
 

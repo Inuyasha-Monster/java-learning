@@ -92,6 +92,15 @@ public class DesignTaco2Controller {
      * @return
      */
     public Mono<Taco> postTaco2(@RequestBody Mono<Taco> taco) {
+
+        // 使用阻塞的方式拿到具体的实例对象
+        final Taco block = taco.block();
+
+        // 通过 subscribe 可以使用非响应式的repository来访问db
+        taco.subscribe(x -> {
+            tacoRepository.save(x);
+        });
+
         return reactorTacoRepository.save(taco);
     }
 
