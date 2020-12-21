@@ -26,6 +26,11 @@
     <!--项目依赖-->
     <dependencies>
 
+        <dependency>
+            <groupId>org.springframework.integration</groupId>
+            <artifactId>spring-integration-mail</artifactId>
+        </dependency>
+
         <!--        第一项依赖是Spring Integration的Spring Boot starter。不管我们与哪种流进行交互，对于SpringIntegration流的开发来讲，这个依赖都是必需的-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
