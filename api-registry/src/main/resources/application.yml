@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: api-service
+
+server:
+  port: 0 #  将端口设置成0的话，应用会选择任意一个可用端口来启动。
