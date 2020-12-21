@@ -19,3 +19,11 @@ Spring Security提供了内置的CSRF保护。更幸运的是，默认它就是�
 •@RestController注解简化了REST控制器，使用它的话，处理器方法中就不需要添加@ResponseBody注解了。
 •Spring HATEOAS为Spring MVC控制器返回的资源启用了超链接功能。
 •借助Spring Data REST，Spring Data repository可以自动导出为REST API。
+
+
+
+•异步消息在要通信的应用程序之间提供了一个中间层，这样能够实现更松散的耦合和更强的可扩展性。
+•Spring支持使用JMS、RabbitMQ或Apache Kafka实现异步消息。
+•应用程序可以使用基于模板的客户端（JmsTemplate、RabbitTemplate或KafkaTemplate）向消息代理发送消息。
+•接收消息的应用程序可以借助相同的基于模板的客户端以拉取模式消费消息。
+•通过使用消息监听器注解（@JmsListener、@RabbitListener或@KafkaListener），消息也可以推送至消费者的bean方法中。

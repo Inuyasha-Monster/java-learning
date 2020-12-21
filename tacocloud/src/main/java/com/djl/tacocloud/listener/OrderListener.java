@@ -2,7 +2,14 @@ package com.djl.tacocloud.listener;
 
 import com.djl.tacocloud.entity.Order;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.kafka.clients.consumer.ConsumerRecord;
+import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.jms.annotation.JmsListener;
+import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.kafka.listener.adapter.ConsumerRecordMetadata;
+import org.springframework.kafka.support.KafkaHeaders;
+import org.springframework.messaging.Message;
+import org.springframework.messaging.MessageHeaders;
 import org.springframework.stereotype.Component;
 
 /**
@@ -15,7 +22,25 @@ import org.springframework.stereotype.Component;
 public class OrderListener {
 
     @JmsListener(destination = "tacocloud.order.queue")
-    private void receiveOrder(Order order) {
+    public void receiveOrder(Order order) {
+        log.debug(order.toString());
+    }
+
+    @RabbitListener(queues = "xxxx")
+    public void receiveOrder2(Order order) {
+        log.debug(order.toString());
+    }
+
+    @KafkaListener(topics = "xxxx")
+    public void receiveOrder3(Order order) {
+        log.debug(order.toString());
+    }
+
+    @KafkaListener(topics = "xxxx")
+    public void receiveOrder4(Order order, Message<Order> message) {
+        final MessageHeaders headers = message.getHeaders();
+        final Object o = headers.get(KafkaHeaders.RECEIVED_PARTITION_ID);
+        final Object o1 = headers.get(KafkaHeaders.RECEIVED_TIMESTAMP);
         log.debug(order.toString());
     }
 }
