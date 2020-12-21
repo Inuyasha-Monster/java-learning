@@ -1,6 +1,7 @@
 package com.djl.tacocloud.controller;
 
 import com.djl.tacocloud.entity.Taco;
+import com.djl.tacocloud.repository.ReactorTacoRepository;
 import com.djl.tacocloud.repository.TacoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -10,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.hateoas.*;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 import java.util.Optional;
 
@@ -73,6 +75,24 @@ public class DesignTaco2Controller {
     @GetMapping("/recent3")
     public Flux<Taco> recentTacos3() {
         return Flux.fromIterable(tacoRepository.findAll(null)).take(12);
+    }
+
+    @Autowired
+    private ReactorTacoRepository reactorTacoRepository;
+
+    @GetMapping("/test/{id}")
+    public Mono<Taco> getTacoById(@PathVariable("id") Long id) {
+        return reactorTacoRepository.findTacoById(id);
+    }
+
+    /**
+     * 注意接收的参数和返回的参数都是mono则可以实现完全非阻塞的方式处理web请求
+     *
+     * @param taco
+     * @return
+     */
+    public Mono<Taco> postTaco2(@RequestBody Mono<Taco> taco) {
+        return reactorTacoRepository.save(taco);
     }
 
 }
