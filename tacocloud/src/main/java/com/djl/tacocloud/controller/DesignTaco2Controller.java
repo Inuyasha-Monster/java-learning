@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.hateoas.*;
+import reactor.core.publisher.Flux;
 
 import java.util.Optional;
 
@@ -68,5 +69,10 @@ public class DesignTaco2Controller {
         return tacoRepository.save(taco);
     }
 
+
+    @GetMapping("/recent3")
+    public Flux<Taco> recentTacos3() {
+        return Flux.fromIterable(tacoRepository.findAll(null)).take(12);
+    }
 
 }
