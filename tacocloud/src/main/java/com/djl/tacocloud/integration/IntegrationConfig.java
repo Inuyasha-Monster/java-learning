@@ -8,10 +8,13 @@ import org.springframework.integration.annotation.*;
 import org.springframework.integration.channel.DirectChannel;
 import org.springframework.integration.channel.PublishSubscribeChannel;
 import org.springframework.integration.channel.QueueChannel;
+import org.springframework.integration.core.MessageSource;
 import org.springframework.integration.dsl.IntegrationFlow;
 import org.springframework.integration.dsl.IntegrationFlows;
 import org.springframework.integration.dsl.MessageChannels;
+import org.springframework.integration.file.FileReadingMessageSource;
 import org.springframework.integration.file.dsl.Files;
+import org.springframework.integration.file.filters.SimplePatternFileListFilter;
 import org.springframework.integration.file.support.FileExistsMode;
 import org.springframework.integration.handler.GenericHandler;
 import org.springframework.integration.router.AbstractMappingMessageRouter;
@@ -23,6 +26,7 @@ import org.springframework.messaging.Message;
 import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.MessageHandler;
 import org.springframework.messaging.MessagingException;
+import org.springframework.messaging.support.GenericMessage;
 
 import java.io.File;
 import java.util.Collections;
@@ -206,6 +210,7 @@ public class IntegrationConfig {
     /**
      * 可以声明一个服务激活器，用于在返回一个新的有效载荷之前处理传入的消息。在这种情况下，这个 bean 应该是一个 GenericHandler 而非的 MessageHandler：
      * 在这种情况下，服务激活器是一个 GenericHandler，其中的有效载荷为 Order 类型。当订单到达，它是通过 repository 进行保存；保存 Order 后产生的结果被发送到名称为 completeChannel 的输出通道。注意，GenericHandler 不仅给出了有效载荷，还有消息头（即使该示例不使用任何形式的头信息）具有返回值的可能性
+     *
      * @param orderRepo
      * @return
      */
@@ -215,6 +220,34 @@ public class IntegrationConfig {
         return (payload, headers) -> {
             return orderRepo.save(payload);
         };
+    }
+
+    /**
+     * 此 @Bean 方法声明了一个入站信道适配器 bean，后面跟随着 @InboundChannelAdapter 注解，它们每 1 秒（1000 ms）从注入的 AtomicInteger 提交一个数字到名 numberChannel 的通道中。
+     *
+     * @param source
+     * @return
+     */
+    @Bean
+    @InboundChannelAdapter(poller = @Poller(fixedRate = "1000"), channel = "numberChannel")
+    public MessageSource<Integer> numberSource(AtomicInteger source) {
+        return () -> {
+            return new GenericMessage<>(source.getAndIncrement());
+        };
+    }
+
+    /**
+     * 通常情况下，通道适配器通过的 Spring Integration 的多端点模块之一进行提供。举个例子，假设需要一个入站通道适配器，用它来监视指定的目录，同时将任何写入到那个目录中的文件作为消息，提交到名为 file-channel 的通道中。下面的 Java 配置使用 FileReadingMessageSource 从 Spring Integration 的文件端点模块来实现这一目标：
+     *
+     * @return
+     */
+    @Bean
+    @InboundChannelAdapter(channel = "file-channel", poller = @Poller(fixedDelay = "1000"))
+    public MessageSource<File> fileReadingMessageSource() {
+        FileReadingMessageSource sourceReader = new FileReadingMessageSource();
+        sourceReader.setDirectory(new File("test.txt"));
+        sourceReader.setFilter(new SimplePatternFileListFilter("/test"));
+        return sourceReader;
     }
 
 }
