@@ -1,5 +1,5 @@
 server:
-  port: 3302
+  port: 3303
 management:
   endpoint:
     shutdown:
