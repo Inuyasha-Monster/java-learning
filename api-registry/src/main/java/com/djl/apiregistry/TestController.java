@@ -1,6 +1,7 @@
 package com.djl.apiregistry;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,12 +17,16 @@ import java.util.ArrayList;
 @RequestMapping("/api")
 public class TestController {
 
+    @Value("${server.port}")
+    String port;
+
     @GetMapping("/getList")
     public Iterable<String> getList() {
         ArrayList<String> arrayList = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
             arrayList.add(String.valueOf(i));
         }
+        arrayList.add(port);
         return arrayList;
     }
 
