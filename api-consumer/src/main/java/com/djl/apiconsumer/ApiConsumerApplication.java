@@ -19,7 +19,6 @@ import org.springframework.web.reactive.function.client.WebClient;
 @EnableEurekaClient
 @EnableFeignClients
 @EnableHystrix
-@EnableHystrixDashboard
 public class ApiConsumerApplication {
 
     public static void main(String[] args) {
@@ -37,14 +36,4 @@ public class ApiConsumerApplication {
     public WebClient.Builder webClientBuilder() {
         return WebClient.builder();
     }
-
-//    @Bean
-//    public ServletRegistrationBean getServlet() {
-//        HystrixMetricsStreamServlet streamServlet = new HystrixMetricsStreamServlet();
-//        ServletRegistrationBean registrationBean = new ServletRegistrationBean(streamServlet);
-//        registrationBean.setLoadOnStartup(1);
-//        registrationBean.addUrlMappings("/hystrix.stream");
-//        registrationBean.setName("HystrixMetricsStreamServlet");
-//        return registrationBean;
-//    }
 }
