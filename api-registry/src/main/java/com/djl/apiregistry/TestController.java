@@ -1,6 +1,7 @@
 package com.djl.apiregistry;
 
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,6 +10,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
+import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author djl
@@ -22,8 +25,17 @@ public class TestController {
     String port;
 
     @GetMapping("/timeout")
-    @HystrixCommand(fallbackMethod = "timeoutFallback")
+    @HystrixCommand(fallbackMethod = "timeoutFallback", commandProperties = {
+            @HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds", value = "500")
+    })
     public String timeout() {
+        Random random = new Random(System.currentTimeMillis());
+        final int timeout = random.nextInt(1000);
+        try {
+            TimeUnit.MILLISECONDS.sleep(timeout);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         return "ok";
     }
 

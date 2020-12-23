@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: hystirx-turbine
+
+server:
+  port: 30000
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://test:123456@127.0.0.1:8761/eureka
+
+turbine:
+  app-config: api-service,api-consumer
+  cluster-name-expression: new String("default")

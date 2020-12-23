@@ -11,6 +11,7 @@
         <option value="$PROJECT_DIR$/config-client/pom.xml" />
         <option value="$PROJECT_DIR$/config-client-erueka/pom.xml" />
         <option value="$PROJECT_DIR$/hystrix-dashborad/pom.xml" />
+        <option value="$PROJECT_DIR$/turbine-dashboard/pom.xml" />
       </list>
     </option>
   </component>

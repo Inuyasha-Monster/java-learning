@@ -3,4 +3,4 @@ server:
 
 hystrix:
   dashboard:
-    proxy-stream-allow-list: '*'
+    proxy-stream-allow-list: [ "127.0.0.1","localhost" ]
