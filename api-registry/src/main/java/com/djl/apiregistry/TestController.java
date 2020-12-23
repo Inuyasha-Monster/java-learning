@@ -1,5 +1,6 @@
 package com.djl.apiregistry;
 
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +20,16 @@ public class TestController {
 
     @Value("${server.port}")
     String port;
+
+    @GetMapping("/timeout")
+    @HystrixCommand(fallbackMethod = "timeoutFallback")
+    public String timeout() {
+        return "ok";
+    }
+
+    private String timeoutFallback() {
+        return "timeout";
+    }
 
     @GetMapping("/getList")
     public Iterable<String> getList() {
