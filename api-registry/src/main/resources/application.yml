@@ -1,6 +1,10 @@
 spring:
   application:
     name: api-service
+#  boot:
+#    admin:
+#      client:
+#        url: http://localhost:40000
 
 server:
   port: 8888
