@@ -1,6 +1,8 @@
 package com.djl.apiconsumer;
 
 import com.netflix.hystrix.contrib.metrics.eventstream.HystrixMetricsStreamServlet;
+import com.netflix.loadbalancer.IRule;
+import com.netflix.loadbalancer.WeightedResponseTimeRule;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
@@ -36,5 +38,11 @@ public class ApiConsumerApplication {
     @LoadBalanced
     public WebClient.Builder webClientBuilder() {
         return WebClient.builder();
+    }
+
+
+    @Bean
+    public IRule rule() {
+        return new WeightedResponseTimeRule();
     }
 }
