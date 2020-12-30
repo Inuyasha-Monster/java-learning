@@ -2,14 +2,23 @@ package com.djl.apiregistry;
 
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
+import com.sun.org.apache.bcel.internal.generic.NEW;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpRequest;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
@@ -44,7 +53,15 @@ public class TestController {
     }
 
     @GetMapping("/getList")
-    public Iterable<String> getList() {
+    @ResponseBody
+    public Iterable<String> getList(HttpServletRequest httpRequest) {
+
+        // 判断请求头是否符合要求
+        final String fuck = httpRequest.getHeader("fuck");
+        if (StringUtils.isEmpty(fuck)) {
+            return new ArrayList<>();
+        }
+
         ArrayList<String> arrayList = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
             arrayList.add(String.valueOf(i));

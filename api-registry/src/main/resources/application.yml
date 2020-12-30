@@ -7,7 +7,7 @@ spring:
 #        url: http://localhost:40000
 
 server:
-  port: 8889
+  port: 8888
 
 management:
   endpoints:
