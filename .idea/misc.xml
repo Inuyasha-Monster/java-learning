@@ -6,7 +6,13 @@
         <option value="$PROJECT_DIR$/tacocloud/pom.xml" />
         <option value="$PROJECT_DIR$/service-registry/pom.xml" />
         <option value="$PROJECT_DIR$/api-registry/pom.xml" />
-        <option value="$PROJECT_DIR$/zk/pom.xml" />
+        <option value="$PROJECT_DIR$/api-consumer/pom.xml" />
+        <option value="$PROJECT_DIR$/config-server/pom.xml" />
+        <option value="$PROJECT_DIR$/config-client/pom.xml" />
+        <option value="$PROJECT_DIR$/config-client-erueka/pom.xml" />
+        <option value="$PROJECT_DIR$/hystrix-dashborad/pom.xml" />
+        <option value="$PROJECT_DIR$/turbine-dashboard/pom.xml" />
+        <option value="$PROJECT_DIR$/admin-server/pom.xml" />
       </list>
     </option>
   </component>

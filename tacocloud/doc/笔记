@@ -86,8 +86,12 @@ Spring 5引入了一个非阻塞、异步的Web框架，该框架在很大程度
 
 与Mono.block()类似，Flux.toIterable()在将Flux发布的对象抽取到Iterable的过程中是阻塞的
 
-
-
+服务注册和服务发现的总结:
+•借助自动配置和@EnableEurekaServer注解，Spring Cloud Netflix能够让我们很容易地创建Netflix Eureka服务注册中心。
+•微服务可以使用名字将它们自身注册到Eureka中，这样可以被其他服务发现。
+•在客户端，作为客户端负载均衡器，Ribbon能够根据名称查找服务并选择实例。
+•客户端代码可以使用RestTemplate，利用Ribbon进行负载均衡；也可以将REST客户端定义为接口，由Feign在运行期自动实现。
+•不管采用哪种方案，客户端代码都不需要硬编码它们所消费的服务的地址。
 
 
 

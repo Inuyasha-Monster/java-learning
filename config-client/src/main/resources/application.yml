@@ -1,0 +1,23 @@
+server:
+  port: 3303
+management:
+  endpoint:
+    shutdown:
+      enabled: false
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+data:
+  env: NaN
+  user:
+    username: NaN
+    password: NaN
+
+spring:
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: djlnet
+    password: 111111

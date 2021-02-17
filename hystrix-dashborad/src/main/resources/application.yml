@@ -1,0 +1,6 @@
+server:
+  port: 20000
+
+hystrix:
+  dashboard:
+    proxy-stream-allow-list: [ "127.0.0.1","localhost" ]
