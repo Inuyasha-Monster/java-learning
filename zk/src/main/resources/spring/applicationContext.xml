@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.2.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.2.xsd">
+
+    <!-- 扫描包加载Service实现类 -->
+    <context:component-scan base-package="com.zookeeper.study.service"></context:component-scan>
+
+    <aop:aspectj-autoproxy proxy-target-class="true"></aop:aspectj-autoproxy>
+
+    <!--重试策略-->
+    <bean id="retryPolicy" class="org.apache.curator.retry.RetryNTimes">
+        <constructor-arg name="n" value="3"></constructor-arg>
+        <constructor-arg name="sleepMsBetweenRetries" value="1000"></constructor-arg>
+    </bean>
+
+
+    <bean id="zkClient" class="org.apache.curator.framework.CuratorFrameworkFactory" factory-method="newClient" init-method="start">
+        <!-- zk地址，集群用,分隔 -->
+        <constructor-arg name="connectString" value="localhost:2181"></constructor-arg>
+        <constructor-arg name="connectionTimeoutMs" value="5000"></constructor-arg>
+        <constructor-arg name="sessionTimeoutMs" value="5000"></constructor-arg>
+        <constructor-arg name="retryPolicy" ref="retryPolicy"></constructor-arg>
+    </bean>
+
+
+    <bean id="myCurator" class="com.zookeeper.study.MyCurator">
+        <constructor-arg name="curatorFramework" ref="zkClient"></constructor-arg>
+    </bean>
+
+    <!--分布式锁-->
+    <bean id="distributedLock" class="com.zookeeper.study.ZkLockHelper" init-method="init">
+        <constructor-arg name="curator" ref="zkClient"></constructor-arg>
+    </bean>
+
+</beans>
