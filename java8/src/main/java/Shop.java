@@ -17,7 +17,32 @@ public class Shop {
     }
 
     public double getPrice(String product) {
-        return calculatePrice(product);
+        double price = calculatePrice(product);
+        return price;
+    }
+
+    public String getPriceWithDiscount(String product) {
+        double price = calculatePrice(product);
+
+        // 生成随机折扣
+        Random random = new Random();
+        Discount.Code code = Discount.Code.values()[random.nextInt(Discount.Code.values().length)];
+
+        String format = String.format("%s:%.2f:%s", name, price, code);
+
+        return format;
+    }
+
+    public String getPriceWithDiscountPlus(String product) {
+        double price = calculatePricePlus(product);
+
+        // 生成随机折扣
+        Random random = new Random();
+        Discount.Code code = Discount.Code.values()[random.nextInt(Discount.Code.values().length)];
+
+        String format = String.format("%s:%.2f:%s", name, price, code);
+
+        return format;
     }
 
     public Future<Double> getPriceAsyncPlus(String product) {
@@ -71,6 +96,25 @@ public class Shop {
         } catch (InterruptedException e) {
             System.out.println("线程中断....");
             throw new RuntimeException(e);
+        }
+    }
+
+    private double calculatePricePlus(String product) {
+        randomDelay();
+        Random random = new Random();
+        return random.nextDouble() * product.charAt(0) + product.charAt(1);
+    }
+
+    /**
+     * 随机延时 500 + 1-2000毫秒
+     */
+    public static void randomDelay() {
+        Random random = new Random();
+        int randNum = random.nextInt(2000);
+        try {
+            TimeUnit.MILLISECONDS.sleep(500 + randNum);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
     }
 
