@@ -13,6 +13,7 @@
         <option value="$PROJECT_DIR$/hystrix-dashborad/pom.xml" />
         <option value="$PROJECT_DIR$/turbine-dashboard/pom.xml" />
         <option value="$PROJECT_DIR$/admin-server/pom.xml" />
+        <option value="$PROJECT_DIR$/java8/pom.xml" />
       </list>
     </option>
   </component>
