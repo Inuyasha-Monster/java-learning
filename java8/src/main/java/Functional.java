@@ -77,7 +77,7 @@ public class Functional {
         }
     }
 
-    static class MultiplyingIntegerCollector implements Collector<Integer> {
+    public static class MultiplyingIntegerCollector implements Collector<Integer> {
 
         private Integer val = 1;
 
@@ -93,12 +93,24 @@ public class Functional {
         }
     }
 
+
+
     public static void main(String[] args) {
         List<Integer> li = Arrays.asList(1, 2, 3, 4, 5, 6, 7);
 
         Integer result = forEach(li, new MultiplyingIntegerCollector()).result();
 
         System.out.println("result = " + result);
+
+        int[][][] a = new int[2][2][4];
+        String deepToString = Arrays.deepToString(a);
+        System.out.println("deepToString = " + deepToString);
+
+        Class<?>[] classes = Functional.class.getClasses();
+        for (Class<?> aClass : classes) {
+            String simpleName = aClass.getSimpleName();
+            System.out.println("simpleName = " + simpleName);
+        }
     }
 }
 
